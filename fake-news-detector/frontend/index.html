@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fake News Detector</title>
+  <link rel="stylesheet" href="style.css?v=4">
+</head>
+<body>
+<div class="app">
+  <div class="badge"><span class="badge-dot" id="badge-dot"></span><span id="badge-text">Checking model status</span></div>
+
+  <header class="header">
+    <h1>Separate <em class="word-fact">fact</em> from <em class="word-fiction">fiction</em></h1>
+    <p class="subtitle">Paste an article or a link. A model trained on about 72,000 labelled news stories scores its writing style, then we check the source, fact-checkers and live news coverage.</p>
+  </header>
+
+  <main class="card">
+    <div id="banner" class="alert alert-info" role="status" hidden></div>
+
+    <div class="tabs" role="tablist" aria-label="Input method">
+      <button type="button" class="tab" role="tab" id="tab-manual" aria-selected="true" aria-controls="panel-manual">Manual text entry</button>
+      <button type="button" class="tab" role="tab" id="tab-url" aria-selected="false" aria-controls="panel-url" tabindex="-1">Live URL scraper</button>
+    </div>
+
+    <section id="panel-manual" role="tabpanel" aria-labelledby="tab-manual">
+      <div class="form-heading"><h2>Paste an article</h2><p>Add the headline and the article body.</p></div>
+      <form id="form-manual">
+        <div class="url-field title-field"><span class="url-icon">T</span><input id="title" type="text" maxlength="500" aria-label="Headline" placeholder="Headline"></div>
+        <div class="textarea-wrap">
+          <textarea id="body" aria-label="Article text" placeholder="Paste the full article text here..."></textarea>
+          <span class="counter" id="counter">0 words</span>
+        </div>
+        <div class="actions"><button class="btn-detect" type="submit">Analyze article</button></div>
+      </form>
+      <div class="quick-test">
+        <span class="quick-label">QUICK TEST</span>
+        <div class="quick-buttons">
+          <button type="button" class="chip chip-fake" data-sample="fake">Try a fake sample</button>
+          <button type="button" class="chip chip-real" data-sample="real">Try a real sample</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="panel-url" role="tabpanel" aria-labelledby="tab-url" hidden>
+      <div class="form-heading"><h2>Check a live link</h2><p>We fetch the page and analyze the article text.</p></div>
+      <form id="form-url">
+        <div class="url-row">
+          <div class="url-field"><span class="url-icon">🔗</span><input id="url" type="text" inputmode="url" aria-label="Article link" placeholder="https://example.com/news/story"></div>
+          <button class="btn-detect" type="submit">Fetch and analyze</button>
+        </div>
+        <p class="url-hint">Paywalled pages and pages that load text with JavaScript can't be read. Paste the text instead.</p>
+      </form>
+    </section>
+
+    <div id="error" class="alert" role="alert" hidden></div>
+
+    <section id="result" class="result" aria-live="polite" hidden>
+      <div id="overall" class="verdict verdict-mixed">
+        <div class="verdict-icon" id="overall-icon">?</div>
+        <div><h3 id="overall-label"></h3><p id="overall-sub"></p></div>
+      </div>
+      <div class="votes" id="votes"></div>
+      <h4 class="section-title">Live evidence</h4>
+      <div id="evidence-list"></div>
+      <h4 class="section-title">Writing-style model</h4>
+      <div id="verdict" class="verdict verdict-real">
+        <div class="verdict-icon" id="verdict-icon">✓</div>
+        <div><h3 id="verdict-label"></h3><p id="verdict-sub"></p></div>
+        <span class="verdict-pill" id="verdict-pill"></span>
+      </div>
+      <div class="meter">
+        <div class="meter-row"><span class="meter-name">Confidence</span><div class="track"><div class="fill fill-accent" id="conf-fill"></div></div><span class="meter-val" id="conf-value"></span></div>
+        <div class="meter-row"><span class="meter-name">Real news</span><div class="track"><div class="fill fill-green" id="real-fill"></div></div><span class="meter-val" id="real-value"></span></div>
+        <div class="meter-row"><span class="meter-name">Fake news</span><div class="track"><div class="fill fill-red" id="fake-fill"></div></div><span class="meter-val" id="fake-value"></span></div>
+      </div>
+      <div id="scraped" class="scraped" hidden>
+        <h4 id="scraped-title"></h4>
+        <p class="source" id="scraped-meta"></p>
+        <p id="scraped-text"></p>
+      </div>
+    </section>
+  </main>
+
+  <p class="footer">Results are estimates based on writing style, not fact-checks. Verify important stories with trusted sources.</p>
+</div>
+<script src="app.js?v=4"></script>
+</body>
+</html>

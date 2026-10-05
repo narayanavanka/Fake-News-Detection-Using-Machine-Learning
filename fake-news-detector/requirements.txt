@@ -1,0 +1,14 @@
+fastapi>=0.110
+uvicorn[standard]>=0.29
+pydantic>=2.0
+scikit-learn>=1.2
+pandas>=1.5
+numpy
+joblib
+requests
+beautifulsoup4
+newspaper3k
+lxml_html_clean
+kagglehub          # optional: only used when WELFAKE_AUTO_DOWNLOAD=1
+python-dotenv
+feedparser
